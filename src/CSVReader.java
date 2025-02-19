@@ -10,11 +10,11 @@ public class CSVReader {
     static ArrayList<String> countries;
     static ArrayList<Integer> totalWasteKgPerCapitaPerYear;
     static ArrayList<Integer> householdEstimatesKgPerCapitaPerYear;
-    static ArrayList<Integer> householdEstimateTonnesPerYear;
+    //5
     static ArrayList<Integer> retailEstimateKgPerCapitaPerYear;
-    static ArrayList<Integer> retailEstimateTonnesPerYear;
+    //7
     static ArrayList<Integer> foodServiceEstimateKgPerCapitaPerYear;
-    static ArrayList<Integer> foodServiceEstimateTonnesPerYear;
+    //9
     static ArrayList<String> confidence;
 
     //11
@@ -24,16 +24,29 @@ public class CSVReader {
     static ArrayList<String> year;
     static ArrayList<Double> percentageShareInPoverty;
 
-    public static void populateArrays() {
+
+    /** 
+     * Method used to populate the arrays for all countries
+     */
+    public static void populateArrays()
+    {
+        populateArrays(-1);
+    }
+
+    /**
+     * 
+     * @param size
+     */
+    public static void populateArrays(int size) {
 
         countries = new ArrayList<>();
         totalWasteKgPerCapitaPerYear = new ArrayList<>();
         householdEstimatesKgPerCapitaPerYear = new ArrayList<>();
-        householdEstimateTonnesPerYear = new ArrayList<>();
+
         retailEstimateKgPerCapitaPerYear = new ArrayList<>();
-        retailEstimateTonnesPerYear = new ArrayList<>();
+
         foodServiceEstimateKgPerCapitaPerYear = new ArrayList<>();
-        foodServiceEstimateTonnesPerYear = new ArrayList<>();
+
         confidence = new ArrayList<>();
         region = new ArrayList<>();
         year = new ArrayList<>();
@@ -49,7 +62,9 @@ public class CSVReader {
             br.readLine();
     
             String line;
-            while((line = br.readLine()) !=null)
+            int linesRead = 0;
+
+            while((line = br.readLine()) !=null && (linesRead < size || size == -1))
             {
                 String[] values = line.split(",");
                 for (int i = 0; i < numCols; i++)
@@ -66,25 +81,13 @@ public class CSVReader {
                             int value = Integer.parseInt(values[i]);
                             householdEstimatesKgPerCapitaPerYear.add(value);
                         }
-                        case 4 -> {
-                            int value = Integer.parseInt(values[i]);
-                            householdEstimateTonnesPerYear.add(value);
-                        }
                         case 5 -> {
                             int value = Integer.parseInt(values[i]);
                             retailEstimateKgPerCapitaPerYear.add(value);
                         }
-                        case 6 -> {
-                            int value = Integer.parseInt(values[i]);
-                            retailEstimateTonnesPerYear.add(value);
-                        }
                         case 7 -> {
                             int value = Integer.parseInt(values[i]);
                             foodServiceEstimateKgPerCapitaPerYear.add(value);
-                        }
-                        case 8 -> {
-                            int value = Integer.parseInt(values[i]);
-                            foodServiceEstimateTonnesPerYear.add(value);
                         }
                         case 9 -> confidence.add(values[i]);
     
@@ -100,6 +103,7 @@ public class CSVReader {
                         }
                     }
                 }
+                linesRead++;
             }
             br.close();
         }
